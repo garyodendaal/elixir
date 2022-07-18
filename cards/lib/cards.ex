@@ -1,4 +1,11 @@
 defmodule Cards do
+  @moduledoc """
+   Provides methods for creating and handling a deck of cards
+  """
+
+  @doc """
+    Returns a list of strings representing a list of playing cards
+  """
   def create_deck do
     values = [
       "Ace",
@@ -18,9 +25,10 @@ defmodule Cards do
 
     suits = ["Spades", "Clubs", "Hearts", "Diamonds"]
 
-    cards = for suit <- suits, value <- values do
-      "#{value} of #{suit}"
-    end
+    cards =
+      for suit <- suits, value <- values do
+        "#{value} of #{suit}"
+      end
 
     List.flatten(cards)
   end
@@ -29,18 +37,39 @@ defmodule Cards do
     Enum.shuffle(deck)
   end
 
+  @doc """
+    Determines whether a deck contains a given card
+
+  ## Examples
+
+      iex> deck = Cards.create_deck
+      iex> Cards.contains?(deck, "Ace of Spades")
+      true
+
+  """
   def contains?(deck, card) do
     Enum.member?(deck, card)
   end
 
+  @doc """
+    Divides a deck into a hand and the remainder of the deck.
+    The `hand_size` arguement indicates how many cards should be in the hand.
+
+  ## Examples
+
+      iex> deck = Cards.create_deck
+      iex> {hand, deck} = Cards.deal(deck,2)
+      iex> hand
+      ["Ace of Spades","Two of Spades"]
+
+  """
   def deal(deck, hand_size) do
-    # returns a tuple
     Enum.split(deck, hand_size)
   end
 
   def save(deck, filename) do
     binary = :erlang.term_to_binary(deck)
-    File.write(filename,binary)
+    File.write(filename, binary)
   end
 
   def load(filename) do
@@ -51,17 +80,8 @@ defmodule Cards do
   end
 
   def create_hand(hand_size) do
-    # deck = Cards.create_deck
-    # deck = Cards.shuffle(deck)
-    # hand = Cards.deal(deck, hand_size)
-
-    Cards.create_deck
-    |> Cards.shuffle
+    Cards.create_deck()
+    |> Cards.shuffle()
     |> Cards.deal(hand_size)
-
   end
 end
-
-# Elixir vs Js for deal tuple
-# Cards.deal(deck,5) # {*hand*, *deck*}
-# Cards.deal(deck,5) # {hand: [], deck: []}
