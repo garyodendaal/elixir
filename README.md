@@ -13,4 +13,5 @@ Elixir
   - module is a collection of methods and functions
 
 - iex (Integrated elixir)
-  - iex -S mix
+  - iex -S mix (start shell)
+  - recompile
