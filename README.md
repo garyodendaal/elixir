@@ -15,3 +15,10 @@ Elixir
 - iex (Integrated elixir)
   - iex -S mix (start shell)
   - recompile
+
+!!! Don't do this !!!
+`for suit <- suits do
+      for card <- values do
+        "#{card} of #{suit}"
+      end
+    end`
